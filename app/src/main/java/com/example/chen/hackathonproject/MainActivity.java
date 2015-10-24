@@ -9,7 +9,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.boye.httpclientandroidlib.NameValuePair;
+import ch.boye.httpclientandroidlib.message.BasicNameValuePair;
+
 public class MainActivity extends AppCompatActivity {
+
+    public static String TEST_URL = "http://139.129.24.127/test.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,27 +26,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // 上传Tip~
+        View.OnClickListener listener = new SendMsgListener();
+        findViewById(R.id.button1).setOnClickListener(listener);
+        findViewById(R.id.button2).setOnClickListener(listener);
+        findViewById(R.id.button3).setOnClickListener(listener);
+        findViewById(R.id.button4).setOnClickListener(listener);
 
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                NetCore n = new NetCore();
-//                String url = "http://139.129.24.127/test.php";
-//                List<NameValuePair> params = new ArrayList<NameValuePair>();
-//                try {
-//                    System.out.println("~~********");
-//                    params.add(new BasicNameValuePair("id", "123"));
-////            params.add(new BasicNameValuePair("String" ,"helloWorld"));
-//                    String s = n.postResultToNet(url, params);
-//                    System.out.println(s + "((((((((())))))))");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                System.out.println("~~!!!!!!!!!!!");
-//
-//            }
-//        }).start();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -70,5 +63,47 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void sendMsg(final String msg) {
+                new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NetCore n = new NetCore();
+                String url = "http://139.129.24.127/test.php";
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                try {
+                    System.out.println("~~********");
+                    params.add(new BasicNameValuePair("id", msg));
+                    String s = n.postResultToNet(url, params);
+                    System.out.println(s + "((((((((())))))))");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println("~~!!!!!!!!!!!");
+
+            }
+        }).start();
+    }
+
+    class SendMsgListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.button1:
+                    sendMsg("1");
+                    break;
+                case R.id.button2:
+                    sendMsg("2");
+                    break;
+                case R.id.button3:
+                    sendMsg("3");
+                    break;
+                case R.id.button4:
+                    sendMsg("4");
+                    break;
+            }
+        }
     }
 }
