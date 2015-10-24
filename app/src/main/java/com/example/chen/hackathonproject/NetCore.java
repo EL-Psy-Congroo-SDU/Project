@@ -42,4 +42,12 @@ public class NetCore {
         }
         return result;
     }
+
+//    static String postResultToNet(String url, String content) throws Exception{
+//        HttpPost httpRequest = new HttpPost(url);
+//        HttpEntity httpEntity = new UrlEncodedFormEntity(content,"utf-8");
+//        httpRequest.set
+//
+//        return null;
+//    }
 }
